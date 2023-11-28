@@ -1,0 +1,39 @@
+[gd_scene load_steps=7 format=3 uid="uid://bg1d1wk3ugwok"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_qqtc2"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_cf3mn"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ixkay"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kkm1i"]
+albedo_color = Color(0.184314, 0, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eutew"]
+albedo_color = Color(0.188235, 0.188235, 0.188235, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_p5dk2"]
+material = SubResource("StandardMaterial3D_eutew")
+
+[node name="Player" type="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+axis_lock_angular_x = true
+axis_lock_angular_z = true
+script = ExtResource("1_qqtc2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_cf3mn")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_ixkay")
+surface_material_override/0 = SubResource("StandardMaterial3D_kkm1i")
+
+[node name="RayCast" type="RayCast3D" parent="."]
+target_position = Vector3(0, 0, 20)
+
+[node name="BIGGUN" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.281768, 0, 0, 0, 0.446717, 0, 0, 0, 3.68457, 0.347215, -0.121125, -0.837982)
+mesh = SubResource("BoxMesh_p5dk2")
+
+[node name="GunBarrel" type="Node3D" parent="BIGGUN"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.503152)
