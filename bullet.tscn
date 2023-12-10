@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3 uid="uid://dotc7ose0kf6x"]
+
+[ext_resource type="Script" path="res://bullet.gd" id="1_oc560"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_viipi"]
+albedo_color = Color(0.74902, 0.607843, 0.129412, 1)
+emission_enabled = true
+emission = Color(0.631373, 0.54902, 0.215686, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_m1m44"]
+material = SubResource("StandardMaterial3D_viipi")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qnswi"]
+radius = 0.218309
+height = 0.878031
+
+[node name="Bullet" type="CharacterBody3D"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+collision_layer = 2
+script = ExtResource("1_oc560")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.363411, 0, 0, 0, 0.277663, 0, 0, 0, 0.848955, 0, 0, 0)
+mesh = SubResource("SphereMesh_m1m44")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(0.999697, 0, 0.0246067, 0.0245905, 0.0362426, -0.99904, -0.000891809, 0.999343, 0.0362316, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_qnswi")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+autostart = true
+
+[connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

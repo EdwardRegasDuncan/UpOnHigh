@@ -1,6 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://bg1d1wk3ugwok"]
+[gd_scene load_steps=9 format=3 uid="uid://bg1d1wk3ugwok"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_qqtc2"]
+[ext_resource type="PackedScene" uid="uid://dotc7ose0kf6x" path="res://bullet.tscn" id="2_mf86t"]
+[ext_resource type="PackedScene" uid="uid://bhrcxqhc762e4" path="res://muzzle_flash_vfx.tscn" id="3_3slx3"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_cf3mn"]
 
@@ -20,6 +22,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 axis_lock_angular_x = true
 axis_lock_angular_z = true
 script = ExtResource("1_qqtc2")
+bullet = ExtResource("2_mf86t")
+firing_vfx = ExtResource("3_3slx3")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_cf3mn")
@@ -36,4 +40,4 @@ transform = Transform3D(0.281768, 0, 0, 0, 0.446717, 0, 0, 0, 3.68457, 0.347215,
 mesh = SubResource("BoxMesh_p5dk2")
 
 [node name="GunBarrel" type="Node3D" parent="BIGGUN"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.503152)
+transform = Transform3D(1, 0, 0, 0, -1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, -0.503152)
