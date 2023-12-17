@@ -1,0 +1,46 @@
+[gd_scene load_steps=8 format=3 uid="uid://c87gfgwqpqglt"]
+
+[ext_resource type="Texture2D" uid="uid://elfof3huwwx3" path="res://Prototype Textures/dark/texture_01.png" id="1_ddldk"]
+[ext_resource type="PackedScene" uid="uid://bg1d1wk3ugwok" path="res://player.tscn" id="2_7lbbu"]
+[ext_resource type="Script" path="res://Camera.gd" id="3_f50ct"]
+[ext_resource type="PackedScene" uid="uid://cgefvjxgmaowg" path="res://target.tscn" id="4_wnqm1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rmog7"]
+albedo_texture = ExtResource("1_ddldk")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_gljke"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_22ryc"]
+
+[node name="Main" type="Node"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.383264, 0.923639, 0, -0.923639, 0.383264, 0, 79.8326, 0)
+
+[node name="Camera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 15, 0)
+script = ExtResource("3_f50ct")
+
+[node name="Player" parent="." instance=ExtResource("2_7lbbu")]
+
+[node name="Ground" type="StaticBody3D" parent="."]
+
+[node name="Floor" type="MeshInstance3D" parent="Ground"]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0)
+layers = 4
+material_override = SubResource("StandardMaterial3D_rmog7")
+mesh = SubResource("PlaneMesh_gljke")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+transform = Transform3D(200, 0, 0, 0, 0.1, 0, 0, 0, 200, 0, 0, 0)
+shape = SubResource("BoxShape3D_22ryc")
+
+[node name="Target" parent="." instance=ExtResource("4_wnqm1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.3376, 0, 0)
+
+[node name="Target2" parent="." instance=ExtResource("4_wnqm1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.3376, 0, -5.78939)
+
+[node name="Target3" parent="." instance=ExtResource("4_wnqm1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.3376, 0, 5.1816)

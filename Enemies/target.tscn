@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://cgefvjxgmaowg"]
+
+[ext_resource type="Script" path="res://Enemies/target.gd" id="1_j6yao"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pa14n"]
+albedo_color = Color(0.976471, 0, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_x0awn"]
+material = SubResource("StandardMaterial3D_pa14n")
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_t34kt"]
+
+[node name="Target" type="CharacterBody3D"]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_j6yao")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+layers = 2
+mesh = SubResource("CylinderMesh_x0awn")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CylinderShape3D_t34kt")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CylinderShape3D_t34kt")
