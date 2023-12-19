@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://c87gfgwqpqglt"]
+[gd_scene load_steps=9 format=3 uid="uid://c87gfgwqpqglt"]
 
 [ext_resource type="Texture2D" uid="uid://elfof3huwwx3" path="res://Prototype Textures/dark/texture_01.png" id="1_ddldk"]
-[ext_resource type="PackedScene" uid="uid://bg1d1wk3ugwok" path="res://player.tscn" id="2_7lbbu"]
-[ext_resource type="Script" path="res://Camera.gd" id="3_f50ct"]
-[ext_resource type="PackedScene" uid="uid://cgefvjxgmaowg" path="res://target.tscn" id="4_wnqm1"]
+[ext_resource type="PackedScene" uid="uid://bg1d1wk3ugwok" path="res://Player/player.tscn" id="2_7lbbu"]
+[ext_resource type="Script" path="res://Camera/Camera.gd" id="3_f50ct"]
+[ext_resource type="PackedScene" uid="uid://cgefvjxgmaowg" path="res://Enemies/target.tscn" id="4_wnqm1"]
+[ext_resource type="PackedScene" uid="uid://ccub0ibsuq2ex" path="res://ranged_enemy.tscn" id="5_u8ix6"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rmog7"]
 albedo_texture = ExtResource("1_ddldk")
@@ -14,14 +15,14 @@ albedo_texture = ExtResource("1_ddldk")
 
 [node name="Main" type="Node"]
 
+[node name="Player" parent="." instance=ExtResource("2_7lbbu")]
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.383264, 0.923639, 0, -0.923639, 0.383264, 0, 79.8326, 0)
 
 [node name="Camera" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 15, 0)
 script = ExtResource("3_f50ct")
-
-[node name="Player" parent="." instance=ExtResource("2_7lbbu")]
 
 [node name="Ground" type="StaticBody3D" parent="."]
 
@@ -44,3 +45,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.3376, 0, -5.78939)
 
 [node name="Target3" parent="." instance=ExtResource("4_wnqm1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.3376, 0, 5.1816)
+
+[node name="RangedEnemy2" parent="." instance=ExtResource("5_u8ix6")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2.97272, 1.02467, 11.359)

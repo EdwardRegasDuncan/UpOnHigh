@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://ccub0ibsuq2ex"]
+
+[ext_resource type="Script" path="res://ranged_enemy.gd" id="1_os542"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_usxgp"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_2mi8f"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_iny7d"]
+size = Vector3(1, 0.1, 0.1)
+
+[node name="RangedEnemy" type="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+script = ExtResource("1_os542")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_usxgp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_2mi8f")
+skeleton = NodePath("../CollisionShape3D")
+
+[node name="Gun" type="MeshInstance3D" parent="."]
+transform = Transform3D(-2.98023e-08, 0, -1, 0, 1, 0, 1, 0, -2.98023e-08, -0.260728, 0.423257, -0.742715)
+mesh = SubResource("BoxMesh_iny7d")
+
+[node name="GunBarrel" type="Node3D" parent="Gun"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.47869, 0, 0)
