@@ -1,7 +1,7 @@
 extends CharacterBody3D
 @export var bullet: PackedScene
 @export var firing_vfx: PackedScene
-
+@export var health = 3
 const MOVE_SPEED = 500
 const shoot_damage = 1
 
@@ -52,6 +52,14 @@ func shoot():
 	scene_root.add_child(new_bullet)
 	scene_root.add_child(firing_effect_instance)
 	
+func DealDamage():
+	print("taking damage")
+	health -= 1
+	if health <= 0:
+		kill()
+	
+func kill():
+	queue_free()
 #func shoot(targetPos: Vector3):
 #	var space_state = get_world_3d().direct_space_state
 #	var end = targetPos * 10000
@@ -72,3 +80,8 @@ func shoot():
 
 
 
+
+
+func _on_area_3d_area_entered(area):
+	if area.is_in_group("Projectiles"):
+		DealDamage()

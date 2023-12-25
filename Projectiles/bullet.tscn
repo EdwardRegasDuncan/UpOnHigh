@@ -23,7 +23,7 @@ script = ExtResource("1_oc560")
 transform = Transform3D(0.363411, 0, 0, 0, 0.277663, 0, 0, 0, 0.848955, 0, 0, 0)
 mesh = SubResource("SphereMesh_m1m44")
 
-[node name="Area3D" type="Area3D" parent="."]
+[node name="Area3D" type="Area3D" parent="." groups=["Projectiles"]]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 transform = Transform3D(0.999697, 0, 0.0246067, 0.0245905, 0.0362426, -0.99904, -0.000891809, 0.999343, 0.0362316, 0, 0, 0)

@@ -8,6 +8,7 @@ var canFire
 var fireDelay = 2.0
 @export var firing_vfx: PackedScene
 @export var bullet: PackedScene
+@export var health = 3
 
 func _ready():
 	player = $"../Player"
@@ -21,7 +22,6 @@ func _physics_process(delta):
 		velocity = position.direction_to(player.position) * speed
 		look_at(player.global_transform.origin, Vector3.UP)
 	else: 
-
 		canFire = true
 		look_at(player.global_transform.origin, Vector3.UP)
 	if canFire == true and shootDelayTimer.is_stopped():
@@ -32,7 +32,6 @@ func _physics_process(delta):
 	move_and_slide()
 
 func _shoot():
-
 	var firing_effect_instance : GPUParticles3D = firing_vfx.instantiate()
 	firing_effect_instance.global_transform = $Gun/GunBarrel.global_transform
 	firing_effect_instance.scale = Vector3(1, 1, 1)
@@ -43,6 +42,17 @@ func _shoot():
 	var scene_root = get_tree().get_root().get_children()[0] #fetches first node of the loaded scene tree 
 	scene_root.add_child(new_bullet)
 	scene_root.add_child(firing_effect_instance)
+func _on_area_3d_area_entered(area):
+	if area.is_in_group("Projectiles"):
+		DealDamage()
+func DealDamage():
+	print("taking damage")
+	health -= 1
+	if health <= 0:
+		kill()
+func kill():
+	queue_free()
+
 
 
 

@@ -17,12 +17,14 @@ script = ExtResource("1_os542")
 firing_vfx = ExtResource("2_e6jo0")
 bullet = ExtResource("3_5ciwi")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="Area3D" type="Area3D" parent="." groups=["Enemies"]]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("CapsuleShape3D_usxgp")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_2mi8f")
-skeleton = NodePath("../CollisionShape3D")
+skeleton = NodePath("../Area3D/CollisionShape3D")
 
 [node name="Gun" type="MeshInstance3D" parent="."]
 transform = Transform3D(-2.98023e-08, 0, -1, 0, 1, 0, 1, 0, -2.98023e-08, -0.260728, 0.423257, -0.742715)
@@ -33,3 +35,5 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.478
 
 [node name="ShootDelayTimer" type="Timer" parent="."]
 one_shot = true
+
+[connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
