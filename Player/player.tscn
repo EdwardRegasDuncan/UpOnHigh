@@ -1,8 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://bg1d1wk3ugwok"]
+[gd_scene load_steps=17 format=3 uid="uid://bg1d1wk3ugwok"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_qqtc2"]
 [ext_resource type="PackedScene" uid="uid://dotc7ose0kf6x" path="res://Projectiles/bullet.tscn" id="2_mf86t"]
 [ext_resource type="PackedScene" uid="uid://bhrcxqhc762e4" path="res://VFX/muzzle_flash_vfx.tscn" id="3_3slx3"]
+[ext_resource type="Script" path="res://General Scripts/HurtBox3D.gd" id="4_vsbc6"]
+[ext_resource type="Script" path="res://General Scripts/Hitbox3D.gd" id="4_xiy2u"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_cf3mn"]
 
@@ -17,8 +19,104 @@ albedo_color = Color(0.188235, 0.188235, 0.188235, 1)
 [sub_resource type="BoxMesh" id="BoxMesh_p5dk2"]
 material = SubResource("StandardMaterial3D_eutew")
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_kokir"]
+size = Vector3(4.13, 1, 2.755)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_an8yy"]
+size = Vector3(2.495, 1, 4.675)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dlp1m"]
+size = Vector3(1.19, 1, 7.255)
+
+[sub_resource type="Animation" id="Animation_wlubk"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BIGGUN:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.347215, -0.121125, -0.837982)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BIGGUN:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("HitBox3D/Melee1:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_kmp2h"]
+resource_name = "Slash_1"
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BIGGUN:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.2, 0.3, 0.433333, 0.683333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0.347215, -0.121125, -0.837982), Vector3(-1.779, -0.121125, 1.17627), Vector3(-1.779, -0.121125, -1.42855), Vector3(1.69819, -0.121125, -1.1625), Vector3(1.69819, -0.121125, 0.892552), Vector3(0.347215, -0.121125, -0.837982)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BIGGUN:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.2, 0.3, 0.433333, 0.683333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 2.32916, 0), Vector3(0, 0.858597, 0), Vector3(0, -0.89991, 0), Vector3(0, -1.98203, 0), Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("HitBox3D/Melee1:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.433333),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rvx8f"]
+_data = {
+"RESET": SubResource("Animation_wlubk"),
+"Slash_1": SubResource("Animation_kmp2h")
+}
+
 [node name="Player" type="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+collision_layer = 4
+collision_mask = 4
 axis_lock_angular_x = true
 axis_lock_angular_z = true
 script = ExtResource("1_qqtc2")
@@ -26,6 +124,9 @@ bullet = ExtResource("2_mf86t")
 firing_vfx = ExtResource("3_3slx3")
 
 [node name="Area3D" type="Area3D" parent="." groups=["Players"]]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("4_vsbc6")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("CapsuleShape3D_cf3mn")
@@ -34,14 +135,35 @@ shape = SubResource("CapsuleShape3D_cf3mn")
 mesh = SubResource("CapsuleMesh_ixkay")
 surface_material_override/0 = SubResource("StandardMaterial3D_kkm1i")
 
-[node name="RayCast" type="RayCast3D" parent="."]
-target_position = Vector3(0, 0, 20)
-
 [node name="BIGGUN" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.281768, 0, 0, 0, 0.446717, 0, 0, 0, 3.68457, 0.347215, -0.121125, -0.837982)
 mesh = SubResource("BoxMesh_p5dk2")
 
 [node name="GunBarrel" type="Node3D" parent="BIGGUN"]
 transform = Transform3D(1, 0, 0, 0, -1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, -0.503152)
+
+[node name="HitBox3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.32866)
+collision_layer = 4
+collision_mask = 4
+script = ExtResource("4_xiy2u")
+
+[node name="Melee1" type="CollisionShape3D" parent="HitBox3D"]
+shape = SubResource("BoxShape3D_kokir")
+
+[node name="Melee2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.28821)
+shape = SubResource("BoxShape3D_an8yy")
+
+[node name="Melee3" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.59723)
+shape = SubResource("BoxShape3D_dlp1m")
+
+[node name="Attack1" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_rvx8f")
+}
+
+[node name="AttackTimer" type="Timer" parent="."]
 
 [connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]

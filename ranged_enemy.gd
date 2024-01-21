@@ -1,32 +1,40 @@
 extends CharacterBody3D
 
+@export var PlayerTarget: Node3D
+@export var enabled = false
 
 @onready var shootDelayTimer = $ShootDelayTimer
+@onready var shootPauseTimer = $ShootPauseTimer
 var player
-var speed = 5
+var speed = 50
 var canFire
-var fireDelay = 2.0
+const fire_range = 5
 @export var firing_vfx: PackedScene
 @export var bullet: PackedScene
-@export var health = 3
+@export var health = 30
 
 func _ready():
 	player = $"../Player"
 
 func _physics_process(delta):
+	if !enabled:
+		return
+	
 	var distance = position.distance_to(player.position)
 
 	velocity = Vector3.ZERO
 	
-	if distance > 5:
-		velocity = position.direction_to(player.position) * speed
+	if distance > fire_range:
+		# TODO: 15/01/24 Replace with NavigationServer3D
+		velocity = position.direction_to(player.position) * speed * delta
 		look_at(player.global_transform.origin, Vector3.UP)
+		canFire = false
 	else: 
 		canFire = true
 		look_at(player.global_transform.origin, Vector3.UP)
 	if canFire == true and shootDelayTimer.is_stopped():
 		_shoot()
-		shootDelayTimer.start(fireDelay)
+		shootDelayTimer.start()
 		canFire = false
 		
 	move_and_slide()
@@ -42,14 +50,13 @@ func _shoot():
 	var scene_root = get_tree().get_root().get_children()[0] #fetches first node of the loaded scene tree 
 	scene_root.add_child(new_bullet)
 	scene_root.add_child(firing_effect_instance)
-func _on_area_3d_area_entered(area):
-	if area.is_in_group("Projectiles"):
-		DealDamage()
-func DealDamage():
+
+func take_damage(amount: int) -> void:
 	print("taking damage")
-	health -= 1
+	health -= amount
 	if health <= 0:
 		kill()
+		
 func kill():
 	queue_free()
 

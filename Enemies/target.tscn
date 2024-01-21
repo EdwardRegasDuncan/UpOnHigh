@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://cgefvjxgmaowg"]
+[gd_scene load_steps=6 format=3 uid="uid://cgefvjxgmaowg"]
 
 [ext_resource type="Script" path="res://Enemies/target.gd" id="1_j6yao"]
+[ext_resource type="Script" path="res://General Scripts/HurtBox3D.gd" id="2_bki2j"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pa14n"]
 albedo_color = Color(0.976471, 0, 0, 1)
@@ -25,6 +26,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CylinderShape3D_t34kt")
 
 [node name="Area3D" type="Area3D" parent="."]
+script = ExtResource("2_bki2j")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

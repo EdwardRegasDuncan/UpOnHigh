@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://dotc7ose0kf6x"]
+[gd_scene load_steps=6 format=3 uid="uid://dotc7ose0kf6x"]
 
 [ext_resource type="Script" path="res://Projectiles/bullet.gd" id="1_oc560"]
+[ext_resource type="Script" path="res://General Scripts/Hitbox3D.gd" id="2_fbile"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_viipi"]
 albedo_color = Color(0.74902, 0.607843, 0.129412, 1)
@@ -17,6 +18,7 @@ height = 0.878031
 [node name="Bullet" type="CharacterBody3D"]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 collision_layer = 2
+collision_mask = 2
 script = ExtResource("1_oc560")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
@@ -24,6 +26,7 @@ transform = Transform3D(0.363411, 0, 0, 0, 0.277663, 0, 0, 0, 0.848955, 0, 0, 0)
 mesh = SubResource("SphereMesh_m1m44")
 
 [node name="Area3D" type="Area3D" parent="." groups=["Projectiles"]]
+script = ExtResource("2_fbile")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 transform = Transform3D(0.999697, 0, 0.0246067, 0.0245905, 0.0362426, -0.99904, -0.000891809, 0.999343, 0.0362316, 0, 0, 0)

@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://ccub0ibsuq2ex"]
+[gd_scene load_steps=8 format=3 uid="uid://c5m2oqybmdswh"]
 
-[ext_resource type="Script" path="res://ranged_enemy.gd" id="1_os542"]
-[ext_resource type="PackedScene" uid="uid://bhrcxqhc762e4" path="res://VFX/muzzle_flash_vfx.tscn" id="2_e6jo0"]
-[ext_resource type="PackedScene" uid="uid://dotc7ose0kf6x" path="res://Projectiles/bullet.tscn" id="3_5ciwi"]
+[ext_resource type="Script" path="res://ranged_enemy.gd" id="1_o40p2"]
+[ext_resource type="PackedScene" uid="uid://bhrcxqhc762e4" path="res://VFX/muzzle_flash_vfx.tscn" id="2_j6vr6"]
+[ext_resource type="PackedScene" uid="uid://dotc7ose0kf6x" path="res://Projectiles/bullet.tscn" id="3_uqjwr"]
+[ext_resource type="Script" path="res://General Scripts/HurtBox3D.gd" id="4_7dyc8"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_usxgp"]
 
@@ -13,11 +14,14 @@ size = Vector3(1, 0.1, 0.1)
 
 [node name="RangedEnemy" type="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-script = ExtResource("1_os542")
-firing_vfx = ExtResource("2_e6jo0")
-bullet = ExtResource("3_5ciwi")
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_o40p2")
+firing_vfx = ExtResource("2_j6vr6")
+bullet = ExtResource("3_uqjwr")
 
 [node name="Area3D" type="Area3D" parent="." groups=["Enemies"]]
+script = ExtResource("4_7dyc8")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("CapsuleShape3D_usxgp")
@@ -34,6 +38,11 @@ mesh = SubResource("BoxMesh_iny7d")
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.47869, 0, 0)
 
 [node name="ShootDelayTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="ShootPauseTimer" type="Timer" parent="."]
+wait_time = 0.5
 one_shot = true
 
 [connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
