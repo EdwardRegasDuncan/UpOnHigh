@@ -49,8 +49,6 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("shoot"):
 		shoot()
 	if Input.is_action_just_pressed("alt_fire"):
-		if attack_cooldown.is_stopped():
-			attack_cooldown.start()
 			meleeAttack()
 
 func shoot():
@@ -68,7 +66,10 @@ func shoot():
 	scene_root.add_child(firing_effect_instance)
 
 func meleeAttack():
+	if !attack_cooldown.is_stopped():
+		return
 	combo_timer.start()
+	attack_cooldown.start()
 		
 	combo_count += 1
 	is_attacking = true
