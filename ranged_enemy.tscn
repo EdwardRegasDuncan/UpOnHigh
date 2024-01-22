@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://c5m2oqybmdswh"]
+[gd_scene load_steps=11 format=3 uid="uid://c5m2oqybmdswh"]
 
 [ext_resource type="Script" path="res://ranged_enemy.gd" id="1_o40p2"]
 [ext_resource type="PackedScene" uid="uid://bhrcxqhc762e4" path="res://VFX/muzzle_flash_vfx.tscn" id="2_j6vr6"]
@@ -11,6 +11,68 @@
 
 [sub_resource type="BoxMesh" id="BoxMesh_iny7d"]
 size = Vector3(1, 0.1, 0.1)
+
+[sub_resource type="Animation" id="Animation_jvdl4"]
+resource_name = "HitStun_1"
+length = 1.0
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../MeshInstance3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.383333, 0.666667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../MeshInstance3D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.383333, 0.666667),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0.590253, 0, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ie0fd"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../MeshInstance3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../MeshInstance3D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xgdb8"]
+_data = {
+"HitStun_1": SubResource("Animation_jvdl4"),
+"RESET": SubResource("Animation_ie0fd")
+}
 
 [node name="RangedEnemy" type="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -27,6 +89,7 @@ script = ExtResource("4_7dyc8")
 shape = SubResource("CapsuleShape3D_usxgp")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 mesh = SubResource("CapsuleMesh_2mi8f")
 skeleton = NodePath("../Area3D/CollisionShape3D")
 
@@ -44,5 +107,14 @@ one_shot = true
 [node name="ShootPauseTimer" type="Timer" parent="."]
 wait_time = 0.5
 one_shot = true
+
+[node name="HitStunTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="HitStunAnimation" type="AnimationPlayer" parent="."]
+root_node = NodePath("../HitStunTimer")
+libraries = {
+"": SubResource("AnimationLibrary_xgdb8")
+}
 
 [connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]

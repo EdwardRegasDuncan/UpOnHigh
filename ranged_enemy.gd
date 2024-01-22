@@ -5,19 +5,27 @@ extends CharacterBody3D
 
 @onready var shootDelayTimer = $ShootDelayTimer
 @onready var shootPauseTimer = $ShootPauseTimer
+@onready var hit_stun_timer = $HitStunTimer
+@onready var hit_stun_animation = $HitStunAnimation
+
 var player
 var speed = 50
 var canFire
+var hit = false
 const fire_range = 5
+
 @export var firing_vfx: PackedScene
 @export var bullet: PackedScene
-@export var health = 30
+@export var health = 100
 
 func _ready():
 	player = $"../Player"
 
 func _physics_process(delta):
 	if !enabled:
+		return
+	
+	if hit:
 		return
 	
 	var distance = position.distance_to(player.position)
@@ -50,12 +58,22 @@ func _shoot():
 	var scene_root = get_tree().get_root().get_children()[0] #fetches first node of the loaded scene tree 
 	scene_root.add_child(new_bullet)
 	scene_root.add_child(firing_effect_instance)
+	
+func hitStun():
+	hit = true
+	if hit_stun_animation.is_playing():
+		hit_stun_animation.stop()
+	hit_stun_animation.play("HitStun_1")
+	hit_stun_timer.start()
+	await hit_stun_timer.timeout
+	hit = false
 
 func take_damage(amount: int) -> void:
 	print("taking damage")
 	health -= amount
 	if health <= 0:
 		kill()
+	hitStun()
 		
 func kill():
 	queue_free()
