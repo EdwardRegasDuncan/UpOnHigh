@@ -16,7 +16,6 @@ albedo_texture = ExtResource("1_ddldk")
 [node name="Main" type="Node"]
 
 [node name="Player" parent="." instance=ExtResource("2_7lbbu")]
-health = 50
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.383264, 0.923639, 0, -0.923639, 0.383264, 0, 79.8326, 0)

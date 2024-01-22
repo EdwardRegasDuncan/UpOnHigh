@@ -3,16 +3,20 @@ extends CharacterBody3D
 @export var firing_vfx: PackedScene
 @export var health = 50
 const MOVE_SPEED = 500
+const attacking_move_penalty = 0.4
 const shoot_damage = 1
 
 @onready var cam : Camera3D = get_node("/root/Main/Camera")
 @onready var gunbarrel = get_node("BIGGUN/GunBarrel")
 @onready var hitBoxes = [get_node("Melee1"), get_node("Melee2"), get_node("Melee3")]
 @onready var attack_animation_1 = $Attack1
+@onready var attack_cooldown = $AttackTimer
+@onready var combo_timer = $ComboTimer
 
 var bullet_speed = 30
 var is_attacking = false
-var comboCount = 0
+var combo_count = 0
+const combo_duration = 1
 func _physics_process(delta):
 	
 	var direction = Vector3.ZERO
@@ -26,9 +30,8 @@ func _physics_process(delta):
 		direction.x += 1
 	direction = direction.normalized();
 	
-	if !is_attacking:
-		velocity = direction * MOVE_SPEED * delta
-		
+	
+	velocity = direction * MOVE_SPEED * delta if !is_attacking else direction * (MOVE_SPEED * attacking_move_penalty) * delta
 	move_and_slide()
 
 
@@ -39,11 +42,16 @@ func _physics_process(delta):
 	look_at(targetPos, Vector3.UP)
 	DebugDraw3D.draw_sphere(targetPos)
 	
+	if combo_timer.is_stopped():
+		combo_count = 0
+	
 	# Shooting
 	if Input.is_action_just_pressed("shoot"):
 		shoot()
 	if Input.is_action_just_pressed("alt_fire"):
-		meleeAttack()
+		if attack_cooldown.is_stopped():
+			attack_cooldown.start()
+			meleeAttack()
 
 func shoot():
 	if is_attacking: 
@@ -60,12 +68,28 @@ func shoot():
 	scene_root.add_child(firing_effect_instance)
 
 func meleeAttack():
-	comboCount += 1
+	combo_timer.start()
+		
+	combo_count += 1
 	is_attacking = true
-	attack_animation_1.play("Slash_1")
+	var target_anim = 'RESET'
+		
+	if combo_count == 1:
+		target_anim = 'slash_1'
+	elif combo_count == 2:
+		target_anim = 'slash_2'
+	elif combo_count == 3:
+		target_anim = 'slash_3'
+	else:
+		combo_count = 0
+		is_attacking = false
+		return
+		
+	attack_animation_1.play(target_anim)
 	await get_tree().create_timer(attack_animation_1.current_animation_length).timeout
 	is_attacking = false
 	attack_animation_1.play("RESET")
+		
 	
 func take_damage(amount: int):
 	print("taking damage")
