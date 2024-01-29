@@ -1,7 +1,6 @@
 extends CharacterBody3D
 
 @export var PlayerTarget: Node3D
-@export var enabled = false
 
 @onready var shootDelayTimer = $ShootDelayTimer
 @onready var shootPauseTimer = $ShootPauseTimer
@@ -13,17 +12,19 @@ var speed = 50
 var canFire
 var hit = false
 const fire_range = 5
+const engagement_range = 10
 
 @export var firing_vfx: PackedScene
 @export var bullet: PackedScene
 @export var health = 100
+@export var enable_health = false
+@export var enable_movement = false
+@export var enable_shooting = false
 
 func _ready():
 	player = $"../Player"
 
 func _physics_process(delta):
-	if !enabled:
-		return
 	
 	if hit:
 		return
@@ -32,22 +33,25 @@ func _physics_process(delta):
 
 	velocity = Vector3.ZERO
 	
-	if distance > fire_range:
+	if distance > fire_range and distance < engagement_range:
 		# TODO: 15/01/24 Replace with NavigationServer3D
-		velocity = position.direction_to(player.position) * speed * delta
+		if enable_movement:
+			velocity = position.direction_to(player.position) * speed * delta
 		look_at(player.global_transform.origin, Vector3.UP)
 		canFire = false
-	else: 
+	elif distance < fire_range: 
 		canFire = true
 		look_at(player.global_transform.origin, Vector3.UP)
 	if canFire == true and shootDelayTimer.is_stopped():
 		_shoot()
 		shootDelayTimer.start()
 		canFire = false
-		
+	
 	move_and_slide()
 
 func _shoot():
+	if !enable_shooting:
+		return
 	var firing_effect_instance : GPUParticles3D = firing_vfx.instantiate()
 	firing_effect_instance.global_transform = $Gun/GunBarrel.global_transform
 	firing_effect_instance.scale = Vector3(1, 1, 1)
@@ -70,7 +74,8 @@ func hitStun():
 
 func take_damage(amount: int) -> void:
 	print("taking damage")
-	health -= amount
+	if enable_health:
+		health -= amount
 	if health <= 0:
 		kill()
 	hitStun()

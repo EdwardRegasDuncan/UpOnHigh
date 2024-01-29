@@ -2,13 +2,13 @@ extends CharacterBody3D
 @export var bullet: PackedScene
 @export var firing_vfx: PackedScene
 @export var health = 50
+@export var enable_health = true
 const MOVE_SPEED = 500
 const attacking_move_penalty = 0.4
 const shoot_damage = 1
 
 @onready var cam : Camera3D = get_node("/root/Main/Camera")
 @onready var gunbarrel = get_node("BIGGUN/GunBarrel")
-@onready var hitBoxes = [get_node("Melee1"), get_node("Melee2"), get_node("Melee3")]
 @onready var attack_animation_1 = $Attack1
 @onready var attack_cooldown = $AttackTimer
 @onready var combo_timer = $ComboTimer
@@ -49,7 +49,9 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("shoot"):
 		shoot()
 	if Input.is_action_just_pressed("alt_fire"):
-			meleeAttack()
+		meleeAttack()
+	if Input.is_action_just_pressed("interact"):
+		return
 
 func shoot():
 	if is_attacking: 
@@ -94,6 +96,8 @@ func meleeAttack():
 	
 func take_damage(amount: int):
 	print("taking damage")
+	if !enable_health:
+		return
 	health -= amount
 	if health <= 0:
 		kill()

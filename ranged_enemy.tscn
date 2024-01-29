@@ -14,7 +14,6 @@ size = Vector3(1, 0.1, 0.1)
 
 [sub_resource type="Animation" id="Animation_jvdl4"]
 resource_name = "HitStun_1"
-length = 1.0
 step = 0.0166667
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -74,7 +73,7 @@ _data = {
 "RESET": SubResource("Animation_ie0fd")
 }
 
-[node name="RangedEnemy" type="CharacterBody3D"]
+[node name="RangedEnemy" type="CharacterBody3D" groups=["Enemies"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 collision_layer = 2
 collision_mask = 2
@@ -82,14 +81,13 @@ script = ExtResource("1_o40p2")
 firing_vfx = ExtResource("2_j6vr6")
 bullet = ExtResource("3_uqjwr")
 
-[node name="Area3D" type="Area3D" parent="." groups=["Enemies"]]
+[node name="Area3D" type="Area3D" parent="."]
 script = ExtResource("4_7dyc8")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("CapsuleShape3D_usxgp")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 mesh = SubResource("CapsuleMesh_2mi8f")
 skeleton = NodePath("../Area3D/CollisionShape3D")
 
