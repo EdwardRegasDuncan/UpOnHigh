@@ -8,7 +8,7 @@ const attacking_move_penalty = 0.4
 const shoot_damage = 1
 
 @onready var cam : Camera3D = get_node("/root/Main/Camera")
-@onready var gunbarrel = get_node("BIGGUN/GunBarrel")
+#@onready var gunbarrel = get_node("BIGGUN/GunBarrel")
 @onready var attack_animation_1 = $Attack1
 @onready var attack_cooldown = $AttackTimer
 @onready var combo_timer = $ComboTimer
@@ -46,26 +46,26 @@ func _physics_process(delta):
 		combo_count = 0
 	
 	# Shooting
-	if Input.is_action_just_pressed("shoot"):
-		shoot()
+#	if Input.is_action_just_pressed("shoot"):
+#		shoot()
 	if Input.is_action_just_pressed("alt_fire"):
 		meleeAttack()
 	if Input.is_action_just_pressed("interact"):
 		return
 
-func shoot():
-	if is_attacking: 
-		return
-	var firing_effect_instance : GPUParticles3D = firing_vfx.instantiate()
-	firing_effect_instance.global_transform = $BIGGUN/GunBarrel.global_transform
-	firing_effect_instance.scale = Vector3(1, 1, 1)
-	firing_effect_instance.emitting = true
-	var new_bullet = bullet.instantiate()
-	new_bullet.global_transform = $BIGGUN/GunBarrel.global_transform
-	new_bullet.scale = Vector3(1, 1, 1)
-	var scene_root = get_tree().get_root().get_children()[0] #fetches first node of the loaded scene tree 
-	scene_root.add_child(new_bullet)
-	scene_root.add_child(firing_effect_instance)
+#func shoot():
+#	if is_attacking: 
+#		return
+#	var firing_effect_instance : GPUParticles3D = firing_vfx.instantiate()
+#	firing_effect_instance.global_transform = $BIGGUN/GunBarrel.global_transform
+#	firing_effect_instance.scale = Vector3(1, 1, 1)
+#	firing_effect_instance.emitting = true
+#	var new_bullet = bullet.instantiate()
+#	new_bullet.global_transform = $BIGGUN/GunBarrel.global_transform
+#	new_bullet.scale = Vector3(1, 1, 1)
+#	var scene_root = get_tree().get_root().get_children()[0] #fetches first node of the loaded scene tree 
+#	scene_root.add_child(new_bullet)
+#	scene_root.add_child(firing_effect_instance)
 
 func meleeAttack():
 	if !attack_cooldown.is_stopped():
