@@ -22,10 +22,10 @@ tracks/0/path = NodePath("../MeshInstance3D:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.383333, 0.666667),
+"times": PackedFloat32Array(0, 0.3841, 0.6513),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, 0, 0)]
+"values": [Vector3(0, 1, 0), Vector3(0, 1, 0), Vector3(0, 1, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -34,10 +34,10 @@ tracks/1/path = NodePath("../MeshInstance3D:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.383333, 0.666667),
+"times": PackedFloat32Array(0, 0.3841, 0.6513),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0.590253, 0, 0), Vector3(0, 0, 0)]
+"values": [Vector3(0, 0, 0), Vector3(0.590251, 0, 0), Vector3(0, 0, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_ie0fd"]
@@ -52,7 +52,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(0, 0, 0)]
+"values": [Vector3(0, 1, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -74,7 +74,6 @@ _data = {
 }
 
 [node name="RangedEnemy" type="CharacterBody3D" groups=["Enemies"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_o40p2")
@@ -82,17 +81,19 @@ firing_vfx = ExtResource("2_j6vr6")
 bullet = ExtResource("3_uqjwr")
 
 [node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 script = ExtResource("4_7dyc8")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("CapsuleShape3D_usxgp")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_2mi8f")
 skeleton = NodePath("../Area3D/CollisionShape3D")
 
 [node name="Gun" type="MeshInstance3D" parent="."]
-transform = Transform3D(-2.98023e-08, 0, -1, 0, 1, 0, 1, 0, -2.98023e-08, -0.260728, 0.423257, -0.742715)
+transform = Transform3D(-2.98023e-08, 0, -1, 0, 1, 0, 1, 0, -2.98023e-08, -0.261, 1.5, -0.743)
 mesh = SubResource("BoxMesh_iny7d")
 
 [node name="GunBarrel" type="Node3D" parent="Gun"]
@@ -114,5 +115,7 @@ root_node = NodePath("../HitStunTimer")
 libraries = {
 "": SubResource("AnimationLibrary_xgdb8")
 }
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 
 [connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]

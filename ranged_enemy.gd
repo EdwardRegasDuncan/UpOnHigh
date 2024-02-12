@@ -6,17 +6,18 @@ extends CharacterBody3D
 @onready var shootPauseTimer = $ShootPauseTimer
 @onready var hit_stun_timer = $HitStunTimer
 @onready var hit_stun_animation = $HitStunAnimation
+@onready var nav_agent = $NavigationAgent3D
 
 var player
-var speed = 50
 var canFire
 var hit = false
 const fire_range = 5
-const engagement_range = 10
+const engagement_range = 100
 
 @export var firing_vfx: PackedScene
 @export var bullet: PackedScene
 @export var health = 100
+@export var speed = 100
 @export var enable_health = false
 @export var enable_movement = false
 @export var enable_shooting = false
@@ -30,13 +31,14 @@ func _physics_process(delta):
 		return
 	
 	var distance = position.distance_to(player.position)
+	nav_agent.target_position = player.position
 
 	velocity = Vector3.ZERO
 	
 	if distance > fire_range and distance < engagement_range:
 		# TODO: 15/01/24 Replace with NavigationServer3D
 		if enable_movement:
-			velocity = position.direction_to(player.position) * speed * delta
+			velocity = position.direction_to(nav_agent.get_next_path_position()) * speed * delta
 		look_at(player.global_transform.origin, Vector3.UP)
 		canFire = false
 	elif distance < fire_range: 
