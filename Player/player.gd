@@ -8,15 +8,43 @@ const attacking_move_penalty = 0.4
 const shoot_damage = 1
 
 @onready var cam : Camera3D = get_node("/root/Main/Camera")
-#@onready var gunbarrel = get_node("BIGGUN/GunBarrel")
+@onready var gunbarrel = get_node("BIGGUN/GunBarrel")
 @onready var attack_animation_1 = $Attack1
 @onready var attack_cooldown = $AttackTimer
 @onready var combo_timer = $ComboTimer
-
+var weapon1: Node
+var weapon2: Node
+var weapon3: Node
+var currentWeapon : int = 1
 var bullet_speed = 30
 var is_attacking = false
 var combo_count = 0
 const combo_duration = 1
+
+
+
+func _ready():
+	weapon1 = $MachineGun
+	weapon2 = $Shotgun
+	weapon3 = $Laser_Gun
+	_equipWeapon(1)
+
+func _equipWeapon(weaponIndex):
+	weapon1.set_visible(false)
+	weapon2.set_visible(false)
+	weapon3.set_visible(false)
+	
+	match weaponIndex:
+		1:
+			weapon1.set_visible(true)
+			currentWeapon = 1
+		2:
+			weapon2.set_visible(true)
+			currentWeapon = 2
+		3:
+			weapon3.set_visible(true)
+			currentWeapon = 3
+
 func _physics_process(delta):
 	
 	var direction = Vector3.ZERO
@@ -33,6 +61,13 @@ func _physics_process(delta):
 	
 	velocity = direction * MOVE_SPEED * delta if !is_attacking else direction * (MOVE_SPEED * attacking_move_penalty) * delta
 	move_and_slide()
+	
+	if Input.is_action_just_pressed("equip_weapon1"):
+		_equipWeapon(1)
+	elif Input.is_action_just_pressed("equip_weapon2"):
+		_equipWeapon(2)
+	elif Input.is_action_just_pressed("equip_weapon3"):
+		_equipWeapon(3)
 
 
 	var pickPos = cam.pickPosition

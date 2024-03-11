@@ -15,7 +15,7 @@ func _fire():
 	if(Input.is_action_pressed("shoot")):
 		#Check direction
 		#Spawn projectile
-		#Kill projectile after hit or timeout
+		#Kill projectile after hit or timeout #move stuff to parent class
 		pass
 func _reload():
 	#Check if reload possible

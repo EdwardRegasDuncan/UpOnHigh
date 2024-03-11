@@ -13,31 +13,21 @@ func _ready():
 	firing_interval = 0.1
 	interactible = false
 	magazine_size = 30
+
 func _physics_process(delta):
 	if isFiring:
-		time_since_last_shot += delta
+		time_since_last_shot += delta #replace with timer
 		if time_since_last_shot >= firing_interval:
 			_fire()
 			time_since_last_shot = 0
+
 func _input(event):
 	if event.is_action_pressed(\"shoot\"):
 		isFiring = true
 	elif event.is_action_released(\"shoot\"):
 		isFiring = false
 
-
-#func _startFiring():
-#	isFiring = true
-#
-#func _stopFiring():
-#	isFiring = false
-#	time_since_last_shot = 0
-
 func _fire():
-	
-	#Check direction
-	print(\"firing\")
-	#Spawn projectile - repeat timer
 	var firing_effect_instance : GPUParticles3D = firing_vfx.instantiate()
 	firing_effect_instance.global_transform = $MeshInstance3D/GunBarrel.global_transform
 	firing_effect_instance.scale = Vector3(1, 1, 1)
@@ -48,21 +38,11 @@ func _fire():
 	var scene_root = get_tree().get_root().get_children()[0]
 	scene_root.add_child(new_bullet)
 	scene_root.add_child(firing_effect_instance)
-	#Kill projectile
-	pass
-	if(Input.is_action_just_released(\"shoot\")):
-		#Stop firing/end timer
-		pass
+
 func _reload():
-	#Check if can reload
-	#Play anim
-	#Refill mag
 	pass
 func _interact():
-	#Check if can be interacted with
 	pass
-
-
 
 func _on_area_3d_area_entered(area):
 	if Input.is_action_pressed(\"interact\"):
@@ -72,13 +52,13 @@ func _on_area_3d_area_entered(area):
 "
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wjxcb"]
-size = Vector3(1, 0.125454, 0.152176)
+size = Vector3(1, 0.1, 0.1)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ei6t0"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_apu33"]
 albedo_color = Color(1, 0.137255, 0, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_isj1f"]
-material = SubResource("StandardMaterial3D_ei6t0")
+material = SubResource("StandardMaterial3D_apu33")
 size = Vector3(1, 0.1, 0.1)
 
 [node name="MachineGun" type="Node3D"]

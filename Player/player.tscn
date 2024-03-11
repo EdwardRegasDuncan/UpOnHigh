@@ -1,9 +1,11 @@
-[gd_scene load_steps=16 format=3 uid="uid://bg1d1wk3ugwok"]
+[gd_scene load_steps=18 format=3 uid="uid://bg1d1wk3ugwok"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_qqtc2"]
 [ext_resource type="PackedScene" uid="uid://cadbhxfpynf04" path="res://machine_gun.tscn" id="4_4ndt4"]
 [ext_resource type="Script" path="res://General Scripts/HurtBox3D.gd" id="4_vsbc6"]
 [ext_resource type="Script" path="res://General Scripts/Hitbox3D.gd" id="4_xiy2u"]
+[ext_resource type="PackedScene" uid="uid://c38r2s457nglu" path="res://shotgun.tscn" id="5_wdnox"]
+[ext_resource type="PackedScene" uid="uid://dy3u2md56v320" path="res://laser_gun.tscn" id="6_jcei5"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_cf3mn"]
 
@@ -142,3 +144,12 @@ one_shot = true
 
 [node name="MachineGun" parent="." instance=ExtResource("4_4ndt4")]
 transform = Transform3D(-0.0606827, 0, 0.998157, 0, 1, 0, -0.998157, 0, -0.0606827, 0, 0.572922, -0.60528)
+visible = false
+
+[node name="Shotgun" parent="." instance=ExtResource("5_wdnox")]
+transform = Transform3D(-0.0610486, 0, 0.998135, 0, 1, 0, -0.998135, 0, -0.0610486, 0, 0.573, -0.605)
+visible = false
+
+[node name="Laser_Gun" parent="." instance=ExtResource("6_jcei5")]
+transform = Transform3D(-0.0610486, 0, 0.998135, 0, 1, 0, -0.998135, 0, -0.0610486, 0, 0.573, -0.605)
+visible = false
