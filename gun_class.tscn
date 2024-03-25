@@ -1,6 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://bqjt54e7ggh22"]
+[gd_scene load_steps=4 format=3 uid="uid://bqjt54e7ggh22"]
 
 [ext_resource type="Script" path="res://GunClass.gd" id="1_cv8ox"]
+[ext_resource type="PackedScene" uid="uid://bhrcxqhc762e4" path="res://VFX/muzzle_flash_vfx.tscn" id="2_3ndrj"]
+[ext_resource type="PackedScene" uid="uid://dotc7ose0kf6x" path="res://Projectiles/bullet.tscn" id="3_igqc1"]
 
 [node name="GunClass" type="Node3D"]
 script = ExtResource("1_cv8ox")
+firing_vfx = ExtResource("2_3ndrj")
+bullet = ExtResource("3_igqc1")
