@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://dy3u2md56v320"]
 
-[ext_resource type="Script" path="res://GunClass.gd" id="1_eo8rg"]
+[ext_resource type="Script" path="res://laser_gun.gd" id="1_gfdxi"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_j6ruy"]
 size = Vector3(1, 0.1, 0.1)
@@ -13,7 +13,7 @@ material = SubResource("StandardMaterial3D_fyubj")
 size = Vector3(1, 0.1, 0.1)
 
 [node name="Laser_Gun" type="Node3D"]
-script = ExtResource("1_eo8rg")
+script = ExtResource("1_gfdxi")
 
 [node name="Area3D" type="Area3D" parent="."]
 
@@ -25,3 +25,5 @@ mesh = SubResource("BoxMesh_hqjsf")
 
 [node name="GunBarrel" type="Node3D" parent="MeshInstance3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.513211, 0, 0)
+
+[node name="RayCast3D" type="RayCast3D" parent="."]

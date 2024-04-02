@@ -1,6 +1,7 @@
-[gd_scene load_steps=18 format=3 uid="uid://bg1d1wk3ugwok"]
+[gd_scene load_steps=19 format=3 uid="uid://bg1d1wk3ugwok"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_qqtc2"]
+[ext_resource type="PackedScene" uid="uid://bqjt54e7ggh22" path="res://gun_class.tscn" id="2_273s6"]
 [ext_resource type="PackedScene" uid="uid://cadbhxfpynf04" path="res://machine_gun.tscn" id="4_4ndt4"]
 [ext_resource type="Script" path="res://General Scripts/HurtBox3D.gd" id="4_vsbc6"]
 [ext_resource type="Script" path="res://General Scripts/Hitbox3D.gd" id="4_xiy2u"]
@@ -91,6 +92,11 @@ collision_mask = 4
 axis_lock_angular_x = true
 axis_lock_angular_z = true
 script = ExtResource("1_qqtc2")
+machinegun = ExtResource("4_4ndt4")
+shotgun = ExtResource("5_wdnox")
+lasergun = ExtResource("6_jcei5")
+
+[node name="GunClass" parent="." instance=ExtResource("2_273s6")]
 
 [node name="Area3D" type="Area3D" parent="." groups=["Players"]]
 collision_layer = 4
@@ -142,14 +148,5 @@ one_shot = true
 [node name="ComboTimer" type="Timer" parent="."]
 one_shot = true
 
-[node name="MachineGun" parent="." instance=ExtResource("4_4ndt4")]
-transform = Transform3D(-0.0606827, 0, 0.998157, 0, 1, 0, -0.998157, 0, -0.0606827, 0, 0.572922, -0.60528)
-visible = false
-
-[node name="Shotgun" parent="." instance=ExtResource("5_wdnox")]
-transform = Transform3D(-0.0610486, 0, 0.998135, 0, 1, 0, -0.998135, 0, -0.0610486, 0, 0.573, -0.605)
-visible = false
-
-[node name="Laser_Gun" parent="." instance=ExtResource("6_jcei5")]
-transform = Transform3D(-0.0610486, 0, 0.998135, 0, 1, 0, -0.998135, 0, -0.0610486, 0, 0.573, -0.605)
-visible = false
+[node name="GunSocket" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.418407, 0.357635, 0.288667)

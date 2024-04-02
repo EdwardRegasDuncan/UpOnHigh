@@ -3,6 +3,9 @@ extends CharacterBody3D
 @export var firing_vfx: PackedScene
 @export var health = 50
 @export var enable_health = true
+@export var machinegun: PackedScene
+@export var shotgun: PackedScene
+@export var lasergun: PackedScene
 const MOVE_SPEED = 500
 const attacking_move_penalty = 0.4
 const shoot_damage = 1
@@ -12,9 +15,9 @@ const shoot_damage = 1
 @onready var attack_animation_1 = $Attack1
 @onready var attack_cooldown = $AttackTimer
 @onready var combo_timer = $ComboTimer
-var weapon1: Node
-var weapon2: Node
-var weapon3: Node
+var weapon1
+var weapon2
+var weaponvar 
 var currentWeapon : int = 1
 var bullet_speed = 30
 var is_attacking = false
@@ -23,32 +26,40 @@ const combo_duration = 1
 
 
 
-func _ready():
-	weapon1 = $MachineGun
-	weapon2 = $Shotgun
-	weapon3 = $Laser_Gun
-	_equipWeapon(1)
+
 
 func _equipWeapon(weaponIndex):
-	weapon1.set_visible(false)
-	weapon2.set_visible(false)
-	weapon3.set_visible(false)
+#	weapon1.set_visible(false)
+#	weapon2.set_visible(false)
+#	weapon3.set_visible(false)
 	
 	match weaponIndex:
 		1:
-			weapon1.set_visible(true)
-			currentWeapon = 1
-			$MachineGun.canFire = true
-			$Shotgun.canFire = false
+#			weapon1.set_visible(true) #replace with instantiate
+			var new_machinegun = machinegun.instantiate()
+			new_machinegun.global_transform = $GunSocket.global_transform
+			new_machinegun.scale = Vector3(1, 1, 1)
+			$".".add_child(new_machinegun)
+			$GunClass.canFire = true
+			$GunClass.machinegunActive = true
+#			if currentWeapon == 2 or 3:
+#				new_machinegun.queue_free()
+			
+			
 		2:
-			weapon2.set_visible(true)
-			currentWeapon = 2
-			$MachineGun.canFire = false
-			$Shotgun.canFire = true
+#			weapon2.set_visible(true)
+			var new_shotgun = shotgun.instantiate()
+			new_shotgun.global_transform = $GunSocket.global_transform
+			new_shotgun.scale = Vector3(1, 1, 1)
+			$".".add_child(new_shotgun)
+			$GunClass.shotgunActive = true
 		3:
-			weapon3.set_visible(true)
-			currentWeapon = 3
-			$MachineGun.canFire = false
+#			weapon3.set_visible(true)
+			var new_lasergun = lasergun.instantiate()
+			new_lasergun.global_transform = $GunSocket.global_transform
+			new_lasergun.scale = Vector3(1, 1, 1)
+			$".".add_child(new_lasergun)
+
 
 func _physics_process(delta):
 	
@@ -69,6 +80,7 @@ func _physics_process(delta):
 	
 	if Input.is_action_just_pressed("equip_weapon1"):
 		_equipWeapon(1)
+		currentWeapon = 1
 	elif Input.is_action_just_pressed("equip_weapon2"):
 		_equipWeapon(2)
 	elif Input.is_action_just_pressed("equip_weapon3"):
