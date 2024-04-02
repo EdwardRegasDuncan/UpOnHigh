@@ -38,12 +38,17 @@ func _equipWeapon(weaponIndex):
 		1:
 			weapon1.set_visible(true)
 			currentWeapon = 1
+			$MachineGun.canFire = true
+			$Shotgun.canFire = false
 		2:
 			weapon2.set_visible(true)
 			currentWeapon = 2
+			$MachineGun.canFire = false
+			$Shotgun.canFire = true
 		3:
 			weapon3.set_visible(true)
 			currentWeapon = 3
+			$MachineGun.canFire = false
 
 func _physics_process(delta):
 	

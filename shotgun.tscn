@@ -1,6 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://c38r2s457nglu"]
+[gd_scene load_steps=7 format=3 uid="uid://c38r2s457nglu"]
 
 [ext_resource type="Script" path="res://GunClass.gd" id="1_3dcyf"]
+[ext_resource type="PackedScene" uid="uid://bhrcxqhc762e4" path="res://VFX/muzzle_flash_vfx.tscn" id="2_cr2u6"]
+[ext_resource type="PackedScene" uid="uid://dotc7ose0kf6x" path="res://Projectiles/bullet.tscn" id="3_yuodg"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_nl1hc"]
 size = Vector3(1, 0.1, 0.1)
@@ -14,6 +16,8 @@ size = Vector3(1, 0.1, 0.1)
 
 [node name="Shotgun" type="Node3D"]
 script = ExtResource("1_3dcyf")
+firing_vfx = ExtResource("2_cr2u6")
+bullet = ExtResource("3_yuodg")
 
 [node name="Area3D" type="Area3D" parent="."]
 
@@ -23,5 +27,16 @@ shape = SubResource("BoxShape3D_nl1hc")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_c0qbv")
 
-[node name="Gun_Barrel" type="Node3D" parent="MeshInstance3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.537932, 0, 0)
+[node name="Gun_Barrel1" type="Node3D" parent="MeshInstance3D"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.537932, 0, 0)
+
+[node name="Gun_Barrel2" type="Node3D" parent="MeshInstance3D"]
+transform = Transform3D(0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, 0.5, 0.537932, 0, 0.0463909)
+
+[node name="Gun_Barrel3" type="Node3D" parent="MeshInstance3D"]
+transform = Transform3D(-0.5, 0, 0.866025, 0, 1, 0, -0.866025, 0, -0.5, 0.537932, 0, -0.0336178)
+
+[node name="FiringTimer" type="Timer" parent="."]
+wait_time = 4.0
+
+[connection signal="timeout" from="FiringTimer" to="." method="_on_firing_timer_timeout"]

@@ -5,8 +5,6 @@
 
 [sub_resource type="GDScript" id="GDScript_6ishy"]
 script/source = "extends Gun_Class
-@export var firing_vfx: PackedScene
-@export var bullet: PackedScene
 var isFiring = false
 var time_since_last_shot = 0
 func _ready():
@@ -28,16 +26,19 @@ func _input(event):
 		isFiring = false
 
 func _fire():
-	var firing_effect_instance : GPUParticles3D = firing_vfx.instantiate()
-	firing_effect_instance.global_transform = $MeshInstance3D/GunBarrel.global_transform
-	firing_effect_instance.scale = Vector3(1, 1, 1)
-	firing_effect_instance.emitting = true
-	var new_bullet = bullet.instantiate()
-	new_bullet.global_transform = $MeshInstance3D/GunBarrel.global_transform
-	new_bullet.scale = Vector3(1, 1, 1)
-	var scene_root = get_tree().get_root().get_children()[0]
-	scene_root.add_child(new_bullet)
-	scene_root.add_child(firing_effect_instance)
+	if canFire == true:
+		var firing_effect_instance : GPUParticles3D = firing_vfx.instantiate()
+		firing_effect_instance.global_transform = $MeshInstance3D/GunBarrel.global_transform
+		firing_effect_instance.scale = Vector3(1, 1, 1)
+		firing_effect_instance.emitting = true
+		var new_bullet = bullet.instantiate()
+		new_bullet.global_transform = $MeshInstance3D/GunBarrel.global_transform
+		new_bullet.scale = Vector3(1, 1, 1)
+		var scene_root = get_tree().get_root().get_children()[0]
+		scene_root.add_child(new_bullet)
+		scene_root.add_child(firing_effect_instance)
+	else:
+		return
 
 func _reload():
 	pass
