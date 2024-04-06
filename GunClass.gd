@@ -7,6 +7,8 @@ var canFire
 var machinegunActive
 var shotgunActive
 var lasergunActive
+var ammoCount
+var maxAmmo
 @export var firing_vfx: PackedScene
 @export var bullet: PackedScene
 @export var weapons: Array[PackedScene]
@@ -57,11 +59,10 @@ func _fire():
 #	else:
 #		return
 	pass
+
 func _reload():
-	#Check if reload possible
-	#Reload anim
-	#Refill mag
-	pass
+	ammoCount = maxAmmo
+
 func _interact():
 	#Check if can be equipped
 	#equip

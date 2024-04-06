@@ -12,10 +12,9 @@ func _ready():
 	interactible = false
 	magazine_size = 30
 	machinegunActive = true
-
+	ammoCount = 30
+	maxAmmo = 30
 func _physics_process(delta):
-
-	
 	if isFiring:
 		time_since_last_shot += delta #replace with timer
 		if time_since_last_shot >= firing_interval:
@@ -27,9 +26,10 @@ func _input(event):
 		isFiring = true
 	elif event.is_action_released(\"shoot\"):
 		isFiring = false
-
+	if event.is_action_pressed(\"reload\"):
+		$ReloadTimer.start()
 func _fire():
-	if machinegunActive == true:
+	if machinegunActive == true and ammoCount > 0:
 		var firing_effect_instance : GPUParticles3D = firing_vfx.instantiate()
 		firing_effect_instance.global_transform = $MeshInstance3D/GunBarrel.global_transform
 		firing_effect_instance.scale = Vector3(1, 1, 1)
@@ -40,13 +40,13 @@ func _fire():
 		var scene_root = get_tree().get_root().get_children()[0]
 		scene_root.add_child(new_bullet)
 		scene_root.add_child(firing_effect_instance)
+		ammoCount -= 1
 		print(\"firing\")
 	else:
 		print(canFire)
 		return
 
-func _reload():
-	pass
+
 func _interact():
 	pass
 
@@ -54,7 +54,8 @@ func _on_area_3d_area_entered(area):
 	if Input.is_action_pressed(\"interact\"):
 		print(\"equipped\")
 
-
+func _on_reload_timer_timeout():
+	_reload()
 "
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wjxcb"]
@@ -83,4 +84,9 @@ mesh = SubResource("BoxMesh_isj1f")
 [node name="GunBarrel" type="Node3D" parent="MeshInstance3D"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.473659, 0, 0)
 
+[node name="ReloadTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
 [connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
+[connection signal="timeout" from="ReloadTimer" to="." method="_on_reload_timer_timeout"]

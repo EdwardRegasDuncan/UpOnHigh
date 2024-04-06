@@ -3,10 +3,15 @@ extends Gun_Class
 func _ready():
 	shotgunActive = true
 	canFire = true
+	ammoCount = 2
+	maxAmmo = 2
 
+func _input(event):
+	if event.is_action_pressed("reload"):
+		$ReloadTimer.start()
 
 func _fire():
-	if(canFire == true and shotgunActive == true):
+	if(canFire == true and shotgunActive == true and ammoCount > 0):
 		var firing_effect_instance : GPUParticles3D = firing_vfx.instantiate()
 		firing_effect_instance.global_transform = $MeshInstance3D/Gun_Barrel1.global_transform
 		firing_effect_instance.scale = Vector3(1, 1, 1)
@@ -24,4 +29,9 @@ func _fire():
 		scene_root.add_child(new_bullet3)
 		scene_root.add_child(firing_effect_instance)
 		canFire = false
+		ammoCount -= 1
 		$FiringTimer.start()
+
+
+func _on_reload_timer_timeout():
+	_reload()
