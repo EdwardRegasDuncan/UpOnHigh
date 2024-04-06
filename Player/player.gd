@@ -17,7 +17,7 @@ const shoot_damage = 1
 @onready var combo_timer = $ComboTimer
 var weapon1
 var weapon2
-var weaponvar 
+var currentWeaponInstance 
 var currentWeapon : int = 1
 var bullet_speed = 30
 var is_attacking = false
@@ -29,36 +29,32 @@ const combo_duration = 1
 
 
 func _equipWeapon(weaponIndex):
-#	weapon1.set_visible(false)
-#	weapon2.set_visible(false)
-#	weapon3.set_visible(false)
-	
 	match weaponIndex:
 		1:
-#			weapon1.set_visible(true) #replace with instantiate
+			if currentWeaponInstance != null:
+				currentWeaponInstance.queue_free()
 			var new_machinegun = machinegun.instantiate()
 			new_machinegun.global_transform = $GunSocket.global_transform
 			new_machinegun.scale = Vector3(1, 1, 1)
-			$".".add_child(new_machinegun)
-			$GunClass.canFire = true
-			$GunClass.machinegunActive = true
-#			if currentWeapon == 2 or 3:
-#				new_machinegun.queue_free()
-			
-			
+			$".".add_child(new_machinegun) #adds as child of player
+			currentWeaponInstance = new_machinegun
 		2:
-#			weapon2.set_visible(true)
+
+			if currentWeaponInstance != null:
+				currentWeaponInstance.queue_free()
 			var new_shotgun = shotgun.instantiate()
 			new_shotgun.global_transform = $GunSocket.global_transform
 			new_shotgun.scale = Vector3(1, 1, 1)
 			$".".add_child(new_shotgun)
-			$GunClass.shotgunActive = true
+			currentWeaponInstance = new_shotgun
 		3:
-#			weapon3.set_visible(true)
+			if currentWeaponInstance != null:
+				currentWeaponInstance.queue_free()
 			var new_lasergun = lasergun.instantiate()
 			new_lasergun.global_transform = $GunSocket.global_transform
 			new_lasergun.scale = Vector3(1, 1, 1)
 			$".".add_child(new_lasergun)
+			currentWeaponInstance = new_lasergun
 
 
 func _physics_process(delta):
@@ -74,18 +70,15 @@ func _physics_process(delta):
 		direction.x += 1
 	direction = direction.normalized();
 	
-	
 	velocity = direction * MOVE_SPEED * delta if !is_attacking else direction * (MOVE_SPEED * attacking_move_penalty) * delta
 	move_and_slide()
 	
 	if Input.is_action_just_pressed("equip_weapon1"):
 		_equipWeapon(1)
-		currentWeapon = 1
 	elif Input.is_action_just_pressed("equip_weapon2"):
 		_equipWeapon(2)
 	elif Input.is_action_just_pressed("equip_weapon3"):
 		_equipWeapon(3)
-
 
 	var pickPos = cam.pickPosition
 	var targetPos = Vector3(pickPos.x, position.y, pickPos.z)
@@ -96,28 +89,11 @@ func _physics_process(delta):
 	
 	if combo_timer.is_stopped():
 		combo_count = 0
-	
-	# Shooting
-#	if Input.is_action_just_pressed("shoot"):
-#		shoot()
+
 	if Input.is_action_just_pressed("alt_fire"):
 		meleeAttack()
 	if Input.is_action_just_pressed("interact"):
 		return
-
-#func shoot():
-#	if is_attacking: 
-#		return
-#	var firing_effect_instance : GPUParticles3D = firing_vfx.instantiate()
-#	firing_effect_instance.global_transform = $BIGGUN/GunBarrel.global_transform
-#	firing_effect_instance.scale = Vector3(1, 1, 1)
-#	firing_effect_instance.emitting = true
-#	var new_bullet = bullet.instantiate()
-#	new_bullet.global_transform = $BIGGUN/GunBarrel.global_transform
-#	new_bullet.scale = Vector3(1, 1, 1)
-#	var scene_root = get_tree().get_root().get_children()[0] #fetches first node of the loaded scene tree 
-#	scene_root.add_child(new_bullet)
-#	scene_root.add_child(firing_effect_instance)
 
 func meleeAttack():
 	if !attack_cooldown.is_stopped():
@@ -144,8 +120,7 @@ func meleeAttack():
 	await get_tree().create_timer(attack_animation_1.current_animation_length).timeout
 	is_attacking = false
 	attack_animation_1.play("RESET")
-		
-	
+
 func take_damage(amount: int):
 	print("taking damage")
 	if !enable_health:

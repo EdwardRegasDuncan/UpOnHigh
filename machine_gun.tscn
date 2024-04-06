@@ -11,8 +11,11 @@ func _ready():
 	firing_interval = 0.1
 	interactible = false
 	magazine_size = 30
+	machinegunActive = true
 
 func _physics_process(delta):
+
+	
 	if isFiring:
 		time_since_last_shot += delta #replace with timer
 		if time_since_last_shot >= firing_interval:

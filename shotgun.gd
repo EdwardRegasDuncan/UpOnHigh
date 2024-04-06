@@ -1,7 +1,12 @@
 extends Gun_Class
 
+func _ready():
+	shotgunActive = true
+	canFire = true
+
+
 func _fire():
-	if(canFire == true):
+	if(canFire == true and shotgunActive == true):
 		var firing_effect_instance : GPUParticles3D = firing_vfx.instantiate()
 		firing_effect_instance.global_transform = $MeshInstance3D/Gun_Barrel1.global_transform
 		firing_effect_instance.scale = Vector3(1, 1, 1)

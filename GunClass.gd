@@ -19,6 +19,7 @@ func _ready():
 func _process(delta):
 	if Input.is_action_pressed("shoot"):
 		_fire()
+	
 func _fire():
 	
 #	if(canFire == true and shotgunActive == true):
