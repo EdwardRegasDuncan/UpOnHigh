@@ -1,11 +1,11 @@
 [gd_scene load_steps=7 format=3 uid="uid://bqjt54e7ggh22"]
 
-[ext_resource type="Script" path="res://GunClass.gd" id="1_cv8ox"]
+[ext_resource type="Script" path="res://Weapons/GunClass.gd" id="1_cv8ox"]
 [ext_resource type="PackedScene" uid="uid://bhrcxqhc762e4" path="res://VFX/muzzle_flash_vfx.tscn" id="2_3ndrj"]
 [ext_resource type="PackedScene" uid="uid://dotc7ose0kf6x" path="res://Projectiles/bullet.tscn" id="3_igqc1"]
-[ext_resource type="PackedScene" uid="uid://cadbhxfpynf04" path="res://machine_gun.tscn" id="4_x22o2"]
-[ext_resource type="PackedScene" uid="uid://c38r2s457nglu" path="res://shotgun.tscn" id="5_awlm3"]
-[ext_resource type="PackedScene" uid="uid://dy3u2md56v320" path="res://laser_gun.tscn" id="6_pmuq1"]
+[ext_resource type="PackedScene" uid="uid://cadbhxfpynf04" path="res://Weapons/machine_gun.tscn" id="4_x22o2"]
+[ext_resource type="PackedScene" uid="uid://c38r2s457nglu" path="res://Weapons/shotgun.tscn" id="5_awlm3"]
+[ext_resource type="PackedScene" uid="uid://dy3u2md56v320" path="res://Weapons/laser_gun.tscn" id="6_pmuq1"]
 
 [node name="GunClass" type="Node3D"]
 script = ExtResource("1_cv8ox")

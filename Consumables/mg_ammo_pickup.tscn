@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://dg4ifvlb2ggf0"]
+
+[ext_resource type="Script" path="res://Consumables/MGAmmoPickup.gd" id="1_1w3df"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_140x0"]
+albedo_color = Color(1, 1, 0.0588235, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_km3d6"]
+material = SubResource("StandardMaterial3D_140x0")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_go1a7"]
+
+[node name="MGAmmoPickup" type="Node3D" groups=["Ammo"]]
+script = ExtResource("1_1w3df")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.5, 0, 0, 0)
+mesh = SubResource("BoxMesh_km3d6")
+
+[node name="Area3D" type="Area3D" parent="MeshInstance3D" groups=["Ammo"]]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/Area3D" groups=["Ammo"]]
+shape = SubResource("BoxShape3D_go1a7")
+
+[connection signal="area_entered" from="MeshInstance3D/Area3D" to="." method="_on_area_3d_area_entered"]

@@ -29,6 +29,7 @@ const combo_duration = 1
 func _ready():
 	var ui_instance = UI.instantiate()
 	$".".add_child(ui_instance)
+	_equipWeapon(1)
 
 func _equipWeapon(weaponIndex):
 	match weaponIndex:
@@ -130,3 +131,11 @@ func take_damage(amount: int):
 
 func kill():
 	get_tree().quit()
+	
+func _on_area_3d_area_entered(area):
+	print(area.get_groups())
+	if area.is_in_group("Ammo") and currentWeaponInstance != null:
+		print("found ammo")
+		currentWeaponInstance._reload()
+	else:
+		return

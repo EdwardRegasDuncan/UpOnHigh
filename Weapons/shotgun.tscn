@@ -1,8 +1,8 @@
 [gd_scene load_steps=10 format=3 uid="uid://c38r2s457nglu"]
 
-[ext_resource type="Script" path="res://shotgun.gd" id="1_fry1d"]
-[ext_resource type="PackedScene" uid="uid://bhrcxqhc762e4" path="res://VFX/muzzle_flash_vfx.tscn" id="2_cr2u6"]
-[ext_resource type="PackedScene" uid="uid://dotc7ose0kf6x" path="res://Projectiles/bullet.tscn" id="3_yuodg"]
+[ext_resource type="Script" path="res://Weapons/shotgun.gd" id="1_016nj"]
+[ext_resource type="PackedScene" uid="uid://bhrcxqhc762e4" path="res://VFX/muzzle_flash_vfx.tscn" id="2_ssptm"]
+[ext_resource type="PackedScene" uid="uid://dotc7ose0kf6x" path="res://Projectiles/bullet.tscn" id="3_5gi0l"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_nl1hc"]
 size = Vector3(1, 0.1, 0.1)
@@ -50,9 +50,9 @@ _data = {
 }
 
 [node name="Shotgun" type="Node3D"]
-script = ExtResource("1_fry1d")
-firing_vfx = ExtResource("2_cr2u6")
-bullet = ExtResource("3_yuodg")
+script = ExtResource("1_016nj")
+firing_vfx = ExtResource("2_ssptm")
+bullet = ExtResource("3_5gi0l")
 
 [node name="Area3D" type="Area3D" parent="."]
 

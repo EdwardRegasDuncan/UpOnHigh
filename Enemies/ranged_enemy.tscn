@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://c5m2oqybmdswh"]
 
-[ext_resource type="Script" path="res://ranged_enemy.gd" id="1_o40p2"]
+[ext_resource type="Script" path="res://Enemies/ranged_enemy.gd" id="1_o40p2"]
 [ext_resource type="PackedScene" uid="uid://bhrcxqhc762e4" path="res://VFX/muzzle_flash_vfx.tscn" id="2_j6vr6"]
 [ext_resource type="PackedScene" uid="uid://dotc7ose0kf6x" path="res://Projectiles/bullet.tscn" id="3_uqjwr"]
 [ext_resource type="Script" path="res://General Scripts/HurtBox3D.gd" id="4_7dyc8"]
