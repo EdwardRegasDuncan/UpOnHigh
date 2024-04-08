@@ -101,7 +101,7 @@ lasergun = ExtResource("6_jcei5")
 [node name="GunSocket" type="Node3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.0076791, 0.357635, -0.607678)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="GunSocket"]
+[node name="SocketMarker" type="MeshInstance3D" parent="GunSocket"]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0.137495, 0, 0)
 mesh = SubResource("SphereMesh_qjllc")
 

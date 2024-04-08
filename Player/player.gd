@@ -25,9 +25,6 @@ var combo_count = 0
 const combo_duration = 1
 
 
-
-
-
 func _equipWeapon(weaponIndex):
 	match weaponIndex:
 		1:
@@ -45,14 +42,14 @@ func _equipWeapon(weaponIndex):
 			new_shotgun.scale = Vector3(1, 1, 1)
 			$GunSocket.add_child(new_shotgun)
 			currentWeaponInstance = new_shotgun
-		3:
-			if currentWeaponInstance != null:
-				currentWeaponInstance.queue_free()
-			var new_lasergun = lasergun.instantiate()
-			new_lasergun.global_transform = $GunSocket.global_transform
-			new_lasergun.scale = Vector3(1, 1, 1)
-			$".".add_child(new_lasergun)
-			currentWeaponInstance = new_lasergun
+#		3:
+#			if currentWeaponInstance != null:
+#				currentWeaponInstance.queue_free()
+#			var new_lasergun = lasergun.instantiate()
+#			new_lasergun.global_transform = $GunSocket.global_transform
+#			new_lasergun.scale = Vector3(1, 1, 1)
+#			$".".add_child(new_lasergun)
+#			currentWeaponInstance = new_lasergun
 func _input(event):
 	if Input.is_action_just_pressed("equip_weapon1"):
 		_equipWeapon(1)
@@ -60,9 +57,12 @@ func _input(event):
 		_equipWeapon(2)
 	elif Input.is_action_just_pressed("equip_weapon3"):
 		_equipWeapon(3)
+	if Input.is_action_just_pressed("alt_fire"):
+		meleeAttack()
+	if Input.is_action_just_pressed("interact"):
+		return
 
 func _physics_process(delta):
-
 	var direction = Vector3.ZERO
 	if Input.is_action_pressed("move_up"):
 		direction.z -= 1
@@ -88,11 +88,6 @@ func _physics_process(delta):
 	
 	if combo_timer.is_stopped():
 		combo_count = 0
-
-	if Input.is_action_just_pressed("alt_fire"):
-		meleeAttack()
-	if Input.is_action_just_pressed("interact"):
-		return
 
 func meleeAttack():
 	if !attack_cooldown.is_stopped():

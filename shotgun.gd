@@ -9,9 +9,11 @@ func _ready():
 func _input(event):
 	if event.is_action_pressed("reload"):
 		$ReloadTimer.start()
+		$AnimationPlayer.play("Reload")
 
 func _fire():
 	if(canFire == true and shotgunActive == true and ammoCount > 0):
+		$AnimationPlayer.play("Recoil")
 		var firing_effect_instance : GPUParticles3D = firing_vfx.instantiate()
 		firing_effect_instance.global_transform = $MeshInstance3D/Gun_Barrel1.global_transform
 		firing_effect_instance.scale = Vector3(1, 1, 1)
