@@ -72,14 +72,14 @@ size = Vector3(1, 0.1, 0.1)
 
 [sub_resource type="Animation" id="Animation_d8n1f"]
 resource_name = "Recoil"
-length = 0.5
+length = 0.2
 tracks/0/type = "rotation_3d"
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/path = NodePath("MeshInstance3D")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1, 0.1, 1, 0, 0, 0.0516301, 0.998666)
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0.0322132, 0, 0.999481, 0.1, 1, 0, -0.0264125, 0, 0.999651, 0.2, 1, 0, 0, 0, 1)
 
 [sub_resource type="Animation" id="Animation_3fguo"]
 resource_name = "Reload"
@@ -120,6 +120,7 @@ bullet = ExtResource("2_ye8sj")
 shape = SubResource("BoxShape3D_wjxcb")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 mesh = SubResource("BoxMesh_isj1f")
 
 [node name="GunBarrel" type="Node3D" parent="MeshInstance3D"]

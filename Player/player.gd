@@ -6,6 +6,7 @@ extends CharacterBody3D
 @export var machinegun: PackedScene
 @export var shotgun: PackedScene
 @export var lasergun: PackedScene
+@export var UI: PackedScene
 const MOVE_SPEED = 500
 const attacking_move_penalty = 0.4
 const shoot_damage = 1
@@ -24,6 +25,10 @@ var is_attacking = false
 var combo_count = 0
 const combo_duration = 1
 
+
+func _ready():
+	var ui_instance = UI.instantiate()
+	$".".add_child(ui_instance)
 
 func _equipWeapon(weaponIndex):
 	match weaponIndex:

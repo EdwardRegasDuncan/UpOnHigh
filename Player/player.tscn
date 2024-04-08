@@ -1,10 +1,11 @@
-[gd_scene load_steps=20 format=3 uid="uid://bg1d1wk3ugwok"]
+[gd_scene load_steps=21 format=3 uid="uid://bg1d1wk3ugwok"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_qqtc2"]
 [ext_resource type="PackedScene" uid="uid://bqjt54e7ggh22" path="res://gun_class.tscn" id="2_273s6"]
 [ext_resource type="PackedScene" uid="uid://cadbhxfpynf04" path="res://machine_gun.tscn" id="4_4ndt4"]
 [ext_resource type="Script" path="res://General Scripts/HurtBox3D.gd" id="4_vsbc6"]
 [ext_resource type="Script" path="res://General Scripts/Hitbox3D.gd" id="4_xiy2u"]
+[ext_resource type="PackedScene" uid="uid://b4yrd5ygr0ku4" path="res://ui.tscn" id="5_814eo"]
 [ext_resource type="PackedScene" uid="uid://c38r2s457nglu" path="res://shotgun.tscn" id="5_wdnox"]
 [ext_resource type="PackedScene" uid="uid://dy3u2md56v320" path="res://laser_gun.tscn" id="6_jcei5"]
 
@@ -97,6 +98,7 @@ script = ExtResource("1_qqtc2")
 machinegun = ExtResource("4_4ndt4")
 shotgun = ExtResource("5_wdnox")
 lasergun = ExtResource("6_jcei5")
+UI = ExtResource("5_814eo")
 
 [node name="GunSocket" type="Node3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.0076791, 0.357635, -0.607678)
