@@ -34,18 +34,16 @@ func _equipWeapon(weaponIndex):
 			if currentWeaponInstance != null:
 				currentWeaponInstance.queue_free()
 			var new_machinegun = machinegun.instantiate()
-			new_machinegun.global_transform = $GunSocket.global_transform
 			new_machinegun.scale = Vector3(1, 1, 1)
-			$".".add_child(new_machinegun) #adds as child of player
+			$GunSocket.add_child(new_machinegun) #adds as child of player
 			currentWeaponInstance = new_machinegun
 		2:
 
 			if currentWeaponInstance != null:
 				currentWeaponInstance.queue_free()
 			var new_shotgun = shotgun.instantiate()
-			new_shotgun.global_transform = $GunSocket.global_transform
 			new_shotgun.scale = Vector3(1, 1, 1)
-			$".".add_child(new_shotgun)
+			$GunSocket.add_child(new_shotgun)
 			currentWeaponInstance = new_shotgun
 		3:
 			if currentWeaponInstance != null:
@@ -55,10 +53,16 @@ func _equipWeapon(weaponIndex):
 			new_lasergun.scale = Vector3(1, 1, 1)
 			$".".add_child(new_lasergun)
 			currentWeaponInstance = new_lasergun
-
+func _input(event):
+	if Input.is_action_just_pressed("equip_weapon1"):
+		_equipWeapon(1)
+	elif Input.is_action_just_pressed("equip_weapon2"):
+		_equipWeapon(2)
+	elif Input.is_action_just_pressed("equip_weapon3"):
+		_equipWeapon(3)
 
 func _physics_process(delta):
-	
+
 	var direction = Vector3.ZERO
 	if Input.is_action_pressed("move_up"):
 		direction.z -= 1
@@ -73,12 +77,7 @@ func _physics_process(delta):
 	velocity = direction * MOVE_SPEED * delta if !is_attacking else direction * (MOVE_SPEED * attacking_move_penalty) * delta
 	move_and_slide()
 	
-	if Input.is_action_just_pressed("equip_weapon1"):
-		_equipWeapon(1)
-	elif Input.is_action_just_pressed("equip_weapon2"):
-		_equipWeapon(2)
-	elif Input.is_action_just_pressed("equip_weapon3"):
-		_equipWeapon(3)
+	
 
 	var pickPos = cam.pickPosition
 	var targetPos = Vector3(pickPos.x, position.y, pickPos.z)

@@ -62,6 +62,7 @@ func _fire():
 
 func _reload():
 	ammoCount = maxAmmo
+	
 
 func _interact():
 	#Check if can be equipped

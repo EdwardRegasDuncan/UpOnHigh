@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cadbhxfpynf04"]
+[gd_scene load_steps=11 format=3 uid="uid://cadbhxfpynf04"]
 
 [ext_resource type="PackedScene" uid="uid://bhrcxqhc762e4" path="res://VFX/muzzle_flash_vfx.tscn" id="1_fbylg"]
 [ext_resource type="PackedScene" uid="uid://dotc7ose0kf6x" path="res://Projectiles/bullet.tscn" id="2_ye8sj"]
@@ -28,6 +28,7 @@ func _input(event):
 		isFiring = false
 	if event.is_action_pressed(\"reload\"):
 		$ReloadTimer.start()
+		$AnimationPlayer.play(\"Reload\")
 func _fire():
 	if machinegunActive == true and ammoCount > 0:
 		var firing_effect_instance : GPUParticles3D = firing_vfx.instantiate()
@@ -42,6 +43,7 @@ func _fire():
 		scene_root.add_child(firing_effect_instance)
 		ammoCount -= 1
 		print(\"firing\")
+		$AnimationPlayer.play(\"Recoil\")
 	else:
 		print(canFire)
 		return
@@ -68,6 +70,45 @@ albedo_color = Color(1, 0.137255, 0, 1)
 material = SubResource("StandardMaterial3D_apu33")
 size = Vector3(1, 0.1, 0.1)
 
+[sub_resource type="Animation" id="Animation_d8n1f"]
+resource_name = "Recoil"
+length = 0.5
+tracks/0/type = "rotation_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1, 0.1, 1, 0, 0, 0.0516301, 0.998666)
+
+[sub_resource type="Animation" id="Animation_3fguo"]
+resource_name = "Reload"
+length = 3.0
+tracks/0/type = "rotation_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0.446416, 0.894825, 1.5, 1, 0, 0, 0.446416, 0.894825, 3, 1, 0, 0, 0, 1)
+
+[sub_resource type="Animation" id="Animation_52sas"]
+resource_name = "test"
+tracks/0/type = "rotation_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1, 1, 1, 0, 0.870613, 0, -0.491968)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2o02t"]
+_data = {
+"Recoil": SubResource("Animation_d8n1f"),
+"Reload": SubResource("Animation_3fguo"),
+"test": SubResource("Animation_52sas")
+}
+
 [node name="MachineGun" type="Node3D"]
 script = SubResource("GDScript_6ishy")
 firing_vfx = ExtResource("1_fbylg")
@@ -87,6 +128,11 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.4736
 [node name="ReloadTimer" type="Timer" parent="."]
 wait_time = 3.0
 one_shot = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_2o02t")
+}
 
 [connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
 [connection signal="timeout" from="ReloadTimer" to="." method="_on_reload_timer_timeout"]

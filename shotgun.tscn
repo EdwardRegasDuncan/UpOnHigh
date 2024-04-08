@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://c38r2s457nglu"]
+[gd_scene load_steps=9 format=3 uid="uid://c38r2s457nglu"]
 
 [ext_resource type="Script" path="res://shotgun.gd" id="1_fry1d"]
 [ext_resource type="PackedScene" uid="uid://bhrcxqhc762e4" path="res://VFX/muzzle_flash_vfx.tscn" id="2_cr2u6"]
@@ -13,6 +13,14 @@ albedo_color = Color(0, 0.34902, 0.819608, 1)
 [sub_resource type="BoxMesh" id="BoxMesh_c0qbv"]
 material = SubResource("StandardMaterial3D_6ej5f")
 size = Vector3(1, 0.1, 0.1)
+
+[sub_resource type="Animation" id="Animation_u4k26"]
+resource_name = "Reload"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_h1x0d"]
+_data = {
+"Reload": SubResource("Animation_u4k26")
+}
 
 [node name="Shotgun" type="Node3D"]
 script = ExtResource("1_fry1d")
@@ -42,6 +50,12 @@ wait_time = 2.0
 [node name="ReloadTimer" type="Timer" parent="."]
 wait_time = 3.0
 one_shot = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../ReloadTimer")
+libraries = {
+"": SubResource("AnimationLibrary_h1x0d")
+}
 
 [connection signal="timeout" from="FiringTimer" to="." method="_on_firing_timer_timeout"]
 [connection signal="timeout" from="ReloadTimer" to="." method="_on_reload_timer_timeout"]

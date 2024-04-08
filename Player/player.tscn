@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://bg1d1wk3ugwok"]
+[gd_scene load_steps=20 format=3 uid="uid://bg1d1wk3ugwok"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="1_qqtc2"]
 [ext_resource type="PackedScene" uid="uid://bqjt54e7ggh22" path="res://gun_class.tscn" id="2_273s6"]
@@ -7,6 +7,8 @@
 [ext_resource type="Script" path="res://General Scripts/Hitbox3D.gd" id="4_xiy2u"]
 [ext_resource type="PackedScene" uid="uid://c38r2s457nglu" path="res://shotgun.tscn" id="5_wdnox"]
 [ext_resource type="PackedScene" uid="uid://dy3u2md56v320" path="res://laser_gun.tscn" id="6_jcei5"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_qjllc"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_cf3mn"]
 
@@ -96,6 +98,13 @@ machinegun = ExtResource("4_4ndt4")
 shotgun = ExtResource("5_wdnox")
 lasergun = ExtResource("6_jcei5")
 
+[node name="GunSocket" type="Node3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.0076791, 0.357635, -0.607678)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="GunSocket"]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0.137495, 0, 0)
+mesh = SubResource("SphereMesh_qjllc")
+
 [node name="GunClass" parent="." instance=ExtResource("2_273s6")]
 
 [node name="Area3D" type="Area3D" parent="." groups=["Players"]]
@@ -147,6 +156,3 @@ one_shot = true
 
 [node name="ComboTimer" type="Timer" parent="."]
 one_shot = true
-
-[node name="GunSocket" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.418407, 0.357635, 0.288667)
