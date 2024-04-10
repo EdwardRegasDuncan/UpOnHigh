@@ -14,6 +14,17 @@ albedo_color = Color(0, 0.34902, 0.819608, 1)
 material = SubResource("StandardMaterial3D_6ej5f")
 size = Vector3(1, 0.1, 0.1)
 
+[sub_resource type="Animation" id="Animation_muv5d"]
+resource_name = "Recoil"
+length = 0.3
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../MeshInstance3D")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0.1, 1, -0.116679, 0, 0, 0.3, 1, 0, 0, 0)
+
 [sub_resource type="Animation" id="Animation_u4k26"]
 resource_name = "Reload"
 length = 4.0
@@ -31,17 +42,6 @@ tracks/1/path = NodePath("../MeshInstance3D")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = PackedFloat32Array(3.4, 1, 0.0293632, 0, 0, 3.9, 1, -0.0729396, 0, 0, 4, 1, 0, 0, 0)
-
-[sub_resource type="Animation" id="Animation_muv5d"]
-resource_name = "Recoil"
-length = 0.3
-tracks/0/type = "position_3d"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("../MeshInstance3D")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0.1, 1, -0.116679, 0, 0, 0.3, 1, 0, 0, 0)
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_h1x0d"]
 _data = {

@@ -33,6 +33,9 @@ func _fire():
 		canFire = false
 		ammoCount -= 1
 		$FiringTimer.start()
+	elif ammoCount == 0:
+		$ReloadTimer.start()
+		$AnimationPlayer.play("Reload")
 
 
 func _on_reload_timer_timeout():

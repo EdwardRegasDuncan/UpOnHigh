@@ -44,9 +44,9 @@ func _fire():
 		ammoCount -= 1
 		print(\"firing\")
 		$AnimationPlayer.play(\"Recoil\")
-	else:
-		print(canFire)
-		return
+	elif ammoCount == 0:
+		$ReloadTimer.start()
+		$AnimationPlayer.play(\"Reload\")
 
 
 func _interact():
@@ -120,7 +120,6 @@ bullet = ExtResource("2_ye8sj")
 shape = SubResource("BoxShape3D_wjxcb")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 mesh = SubResource("BoxMesh_isj1f")
 
 [node name="GunBarrel" type="Node3D" parent="MeshInstance3D"]
