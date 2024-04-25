@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://c87gfgwqpqglt"]
+[gd_scene load_steps=11 format=3 uid="uid://c87gfgwqpqglt"]
 
 [ext_resource type="Texture2D" uid="uid://elfof3huwwx3" path="res://Prototype Textures/dark/texture_01.png" id="1_ddldk"]
 [ext_resource type="PackedScene" uid="uid://bg1d1wk3ugwok" path="res://Player/player.tscn" id="2_7lbbu"]
@@ -13,6 +13,11 @@ albedo_texture = ExtResource("1_ddldk")
 [sub_resource type="PlaneMesh" id="PlaneMesh_gljke"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_22ryc"]
+
+[sub_resource type="GDScript" id="GDScript_t7yg6"]
+script/source = "extends ProgressBar
+
+"
 
 [node name="Main" type="Node"]
 
@@ -71,3 +76,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.5079, 1, 2.42408)
 
 [node name="MGAmmoPickup" parent="." instance=ExtResource("6_fq484")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.90513, 0.0499996, 2.95487)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Healthbar" type="ProgressBar" parent="CanvasLayer"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -75.5
+offset_right = 75.5
+offset_bottom = 27.0
+grow_horizontal = 2
+script = SubResource("GDScript_t7yg6")

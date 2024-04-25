@@ -9,12 +9,13 @@ var shotgunActive
 var lasergunActive
 var ammoCount
 var maxAmmo
+var ammoTotal
 @export var firing_vfx: PackedScene
 @export var bullet: PackedScene
 @export var weapons: Array[PackedScene]
 # Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
+#func _ready():
+#	ammoTotal = ammoCount - maxAmmo
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -22,6 +23,7 @@ func _process(delta):
 	if Input.is_action_pressed("shoot"):
 		_fire()
 	
+	print(ammoTotal)
 func _fire():
 	
 #	if(canFire == true and shotgunActive == true):
