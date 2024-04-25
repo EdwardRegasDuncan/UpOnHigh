@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://segboiw3ns64"]
+[gd_scene load_steps=6 format=3 uid="uid://cfbhaycqlbtyi"]
 
 [ext_resource type="PackedScene" uid="uid://bhrcxqhc762e4" path="res://VFX/muzzle_flash_vfx.tscn" id="1_qvbeg"]
 [ext_resource type="PackedScene" uid="uid://dotc7ose0kf6x" path="res://Projectiles/bullet.tscn" id="2_mxvir"]

@@ -1,23 +1,19 @@
-class_name Gun_Class
-extends Node3D
-var firing_interval
-var interactible
-var magazine_size
-var canFire
+extends Gun_Class
 
-@export var firing_vfx: PackedScene
-@export var bullet: PackedScene
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	shotgunActive = true
+	canFire = true
+	ammoCount = 2
+	maxAmmo = 2
 
+func _input(event):
+	if event.is_action_pressed("reload"):
+		$ReloadTimer.start()
+		$AnimationPlayer.play("Reload")
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	if Input.is_action_pressed("shoot"):
-		_fire()
 func _fire():
-	if(canFire == true):
+	if(canFire == true and shotgunActive == true and ammoCount > 0):
+		$AnimationPlayer.play("Recoil")
 		var firing_effect_instance : GPUParticles3D = firing_vfx.instantiate()
 		firing_effect_instance.global_transform = $MeshInstance3D/Gun_Barrel1.global_transform
 		firing_effect_instance.scale = Vector3(1, 1, 1)
@@ -35,19 +31,12 @@ func _fire():
 		scene_root.add_child(new_bullet3)
 		scene_root.add_child(firing_effect_instance)
 		canFire = false
+		ammoCount -= 1
 		$FiringTimer.start()
-	else:
-		return
-func _reload():
-	#Check if reload possible
-	#Reload anim
-	#Refill mag
-	pass
-func _interact():
-	#Check if can be equipped
-	#equip
-	pass
+	elif ammoCount == 0:
+		$ReloadTimer.start()
+		$AnimationPlayer.play("Reload")
 
 
-func _on_firing_timer_timeout():
-	canFire = true
+func _on_reload_timer_timeout():
+	_reload()
