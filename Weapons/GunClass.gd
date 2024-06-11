@@ -39,5 +39,3 @@ func _interact():
 	#equip
 	pass
 
-func _on_firing_timer_timeout():
-	canFire = true

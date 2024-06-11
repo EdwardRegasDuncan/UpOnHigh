@@ -4,7 +4,9 @@ func _ready():
 	shotgunActive = true
 	canFire = true
 	ammoCount = GunClass.currentshotgunammo
-	maxshotgunAmmo = 2
+	if ammoCount == 0:
+		$ReloadTimer.start()
+		$AnimationPlayer.play("Reload")
 
 func _input(event):
 	if event.is_action_pressed("reload"):

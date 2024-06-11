@@ -14,6 +14,10 @@ func _ready():
 	firing_interval = 1
 	interactible = false
 	machinegunActive = true
+	if ammoCount == 0:
+		$ReloadTimer.start()
+		$AnimationPlayer.play(\"Reload\")
+		canFire = false
 
 func _physics_process(delta):
 	if isFiring:
@@ -142,7 +146,6 @@ libraries = {
 [node name="FiringTimer" type="Timer" parent="."]
 wait_time = 0.5
 one_shot = true
-autostart = true
 
 [connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
 [connection signal="timeout" from="ReloadTimer" to="." method="_on_reload_timer_timeout"]
