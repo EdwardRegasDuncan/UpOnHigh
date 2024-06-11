@@ -3,8 +3,8 @@ extends Gun_Class
 func _ready():
 	shotgunActive = true
 	canFire = true
-	ammoCount = 2
-	maxAmmo = 2
+	ammoCount = GunClass.currentshotgunammo
+	maxshotgunAmmo = 2
 
 func _input(event):
 	if event.is_action_pressed("reload"):
@@ -32,6 +32,7 @@ func _fire():
 		scene_root.add_child(firing_effect_instance)
 		canFire = false
 		ammoCount -= 1
+		GunClass.currentshotgunammo = ammoCount
 		$FiringTimer.start()
 	elif ammoCount == 0:
 		$ReloadTimer.start()

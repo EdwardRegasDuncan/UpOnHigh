@@ -51,6 +51,7 @@ func _fire():
 	elif ammoCount == 0:
 		$ReloadTimer.start()
 		$AnimationPlayer.play(\"Reload\")
+		canFire = false
 
 func _interact():
 	pass

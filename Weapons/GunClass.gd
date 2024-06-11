@@ -9,15 +9,17 @@ var shotgunActive
 var lasergunActive
 var ammoCount
 var current_mg_ammo
-var maxAmmo
+var currentshotgunammo
+var maxshotgunAmmo = 2
+var maxmgAmmo = 30
 var ammoTotal
 @export var firing_vfx: PackedScene
 @export var bullet: PackedScene
 @export var weapons: Array[PackedScene]
 
 func _ready():
-	current_mg_ammo = 30
-
+	current_mg_ammo = maxmgAmmo
+	currentshotgunammo = maxshotgunAmmo
 func _process(delta):
 	if Input.is_action_pressed("shoot"):
 		_fire()
@@ -26,7 +28,11 @@ func _fire():
 	pass
 
 func _reload():
-	ammoCount = maxAmmo
+	if machinegunActive == true:
+		ammoCount = maxmgAmmo
+	if shotgunActive == true:
+		ammoCount = maxshotgunAmmo
+	
 
 func _interact():
 	#Check if can be equipped
