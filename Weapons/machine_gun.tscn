@@ -7,16 +7,20 @@
 script/source = "extends Gun_Class
 var isFiring = false
 var time_since_last_shot = 0
+var player = \"res://Player/player.tscn\"
+
 func _ready():
+	ammoCount = GunClass.current_mg_ammo
 	firing_interval = 1
 	interactible = false
-	magazine_size = 30
 	machinegunActive = true
-	ammoCount = 30
-	maxAmmo = 30
+
 func _physics_process(delta):
 	if isFiring:
 			_fire()
+	if ammoCount > 0:
+		canFire = true
+
 
 func _input(event):
 	if event.is_action_pressed(\"shoot\"):
@@ -28,7 +32,8 @@ func _input(event):
 		$AnimationPlayer.play(\"Reload\")
 
 func _fire():
-	if machinegunActive == true and ammoCount > 0 and $FiringTimer.is_stopped():
+	if machinegunActive == true and canFire == true and $FiringTimer.is_stopped():
+		print(\"firing\")
 		var firing_effect_instance : GPUParticles3D = firing_vfx.instantiate()
 		firing_effect_instance.global_transform = $MeshInstance3D/GunBarrel.global_transform
 		firing_effect_instance.scale = Vector3(1, 1, 1)
@@ -40,8 +45,7 @@ func _fire():
 		scene_root.add_child(new_bullet)
 		scene_root.add_child(firing_effect_instance)
 		ammoCount -= 1
-		print(\"firing\")
-		#add firing timer with variable
+		GunClass.current_mg_ammo = ammoCount
 		$AnimationPlayer.play(\"Recoil\")
 		$FiringTimer.start()
 	elif ammoCount == 0:
@@ -51,9 +55,9 @@ func _fire():
 func _interact():
 	pass
 	
-func _on_area_3d_area_entered(area):
-	if Input.is_action_pressed(\"interact\"):
-		print(\"equipped\")
+#func _on_area_3d_area_entered(area):
+#	if Input.is_action_pressed(\"interact\"):
+##		print(\"equipped\")
 
 func _on_reload_timer_timeout():
 	_reload()
@@ -137,6 +141,7 @@ libraries = {
 [node name="FiringTimer" type="Timer" parent="."]
 wait_time = 0.5
 one_shot = true
+autostart = true
 
 [connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
 [connection signal="timeout" from="ReloadTimer" to="." method="_on_reload_timer_timeout"]
