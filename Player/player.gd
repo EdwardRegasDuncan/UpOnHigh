@@ -7,6 +7,7 @@ extends CharacterBody3D
 @export var shotgun: PackedScene
 @export var lasergun: PackedScene
 @export var UI: PackedScene
+@export var DataHandler: PackedScene
 const MOVE_SPEED = 500
 const attacking_move_penalty = 0.4
 const shoot_damage = 1
@@ -21,6 +22,7 @@ var weapon2
 var currentWeaponInstance 
 var currentWeapon : int = 1
 var bullet_speed = 30
+var current_mg_Ammo
 var is_attacking = false
 var combo_count = 0
 const combo_duration = 1
@@ -40,6 +42,7 @@ func _equipWeapon(weaponIndex):
 			new_machinegun.scale = Vector3(1, 1, 1)
 			$GunSocket.add_child(new_machinegun) #adds as child of player
 			currentWeaponInstance = new_machinegun
+
 		2:
 
 			if currentWeaponInstance != null:
@@ -84,7 +87,6 @@ func _physics_process(delta):
 	move_and_slide()
 	
 	
-
 	var pickPos = cam.pickPosition
 	var targetPos = Vector3(pickPos.x, position.y, pickPos.z)
 	targetPos.y = position.y
