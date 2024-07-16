@@ -21,6 +21,7 @@ func _ready():
 		$ReloadTimer.start()
 		canFire = false
 		$AnimationPlayer.play(\"Reload\")
+		
 
 
 func _physics_process(delta):
@@ -40,8 +41,8 @@ func _input(event):
 		$AnimationPlayer.play(\"Reload\")
 
 func _fire():
+	print(\"firing mg\")
 	if machinegunActive == true and canFire == true and $FiringTimer.is_stopped():
-		print(\"firing\")
 		var firing_effect_instance : GPUParticles3D = firing_vfx.instantiate()
 		firing_effect_instance.global_transform = $MeshInstance3D/GunBarrel.global_transform
 		firing_effect_instance.scale = Vector3(1, 1, 1)

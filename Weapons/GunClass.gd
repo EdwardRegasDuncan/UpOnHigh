@@ -22,10 +22,15 @@ func _ready():
 	current_mg_ammo = maxmgAmmo
 	currentshotgunammo = maxshotgunAmmo
 
-func _process(delta):
-	if Input.is_action_pressed("shoot") and canFire == true:
+func _input(event):
+	if Input.is_action_pressed("shoot"):
+		print("Shoot input detected")
 		_fire()
-		print(canFire)
+
+
+
+
+
 
 func _fire():
 	pass
@@ -38,6 +43,7 @@ func _reload():
 
 		if shotgunActive == true:
 			ammoCount = maxshotgunAmmo
+			canFire = true
 
 	
 
